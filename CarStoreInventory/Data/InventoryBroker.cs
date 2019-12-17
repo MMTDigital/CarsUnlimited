@@ -18,9 +18,9 @@ namespace CarStoreInventory.Data
 
         public async Task PullAsync(string storageConnectionString)
         {
-            CloudStorageAccount storage = CloudStorageAccount.Parse(storageConnectionString);
-            CloudTableClient tableClient = storage.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference("inventory");
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            CloudTableClient cloudTableClient = storageAccount.CreateCloudTableClient();
+            CloudTable table = cloudTableClient.GetTableReference("inventory");
             await table.CreateIfNotExistsAsync();
 
             TableQuery<CarEntity> query = new TableQuery<CarEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, null));
@@ -39,7 +39,90 @@ namespace CarStoreInventory.Data
             hasInitialized = true;
         }
 
-        
+        public async Task UpdateEntityAsync(CarItem changedItem, string storageConnectionString)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            CloudTableClient cloudTableClient = storageAccount.CreateCloudTableClient();
+            CloudTable table = cloudTableClient.GetTableReference("inventory");
+            await table.CreateIfNotExistsAsync();
+
+            var operation = TableOperation.Retrieve<CarEntity>(changedItem.CarManufacturer, changedItem.CarId);
+            var result = await table.ExecuteAsync(operation);
+            var retrievedEntity = (CarEntity)result.Result;
+
+            retrievedEntity.CarInfo = changedItem.CarInfo;
+            retrievedEntity.CarPrice = changedItem.CarPrice;
+            retrievedEntity.CarPicture = changedItem.CarPicture;
+            retrievedEntity.CarModel = changedItem.CarModel;
+            retrievedEntity.CarsInStock = changedItem.CarsInStock;
+
+            operation = TableOperation.Replace(retrievedEntity);
+
+            await table.ExecuteAsync(operation);
+        }
+
+        internal string ChangeStock(string contentItem, string storageConnectionString)
+        {
+            if(!hasInitialized)
+            {
+                throw new InvalidOperationException("Inventory is not initialized.");
+            }
+
+            if(string.IsNullOrWhiteSpace(contentItem))
+            {
+                throw new InvalidOperationException("Instruction string has not been provided");
+            }
+
+            if(!contentItem.Contains(";"))
+            {
+                throw new InvalidOperationException("String is in an invalid format");
+            }
+
+            var contentArray = contentItem.Split(';');
+            var changesToMake = new List<Task>();
+
+            foreach (var stockItem in contentArray)
+            {
+                var stockArray = stockItem.Split(':');
+
+                if (stockArray.Length != 3)
+                {
+                    continue;
+                }
+
+                var carManufacturer = stockArray[0];
+                var carId = stockArray[1];
+                var carStockChange = int.Parse(stockArray[2]);
+
+                var carItem = GetInventoryItemById($"{stockArray[0]}:{stockArray[1]}");
+                carItem.CarsInStock += carStockChange;
+                var t = UpdateEntityAsync(carItem, storageConnectionString);
+                changesToMake.Add(t);
+            }
+
+            Task.WaitAll(changesToMake.ToArray());
+            return "Done!";
+        }
+
+        internal CarItem GetInventoryItemById(string id)
+        {
+            if(!hasInitialized)
+            {
+                throw new InvalidOperationException("Inventory is not initialized");
+            }
+
+            return carsInStock[id];
+        }
+
+        public Dictionary<string, CarItem> GetCurrentInventory()
+        {
+            if(hasInitialized)
+            {
+                return carsInStock;
+            }
+
+            throw new InvalidOperationException("Inventory is not initialized");
+        }
     }
 
     public class CarEntity : TableEntity
