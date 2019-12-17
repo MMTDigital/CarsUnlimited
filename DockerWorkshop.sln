@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarStoreCart", "CarStoreCart\CarStoreCart.csproj", "{651DCC3B-23A3-4509-BDFA-C6C252FA128B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarStoreInventory", "CarStoreInventory\CarStoreInventory.csproj", "{680CA8CF-2799-4DF9-BCCE-880241BF04A3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarStorePurchase", "CarStorePurchase\CarStorePurchase.csproj", "{BB118C60-4B24-4DAB-957C-80D5C7F56CEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarStoreShared", "CarStoreShared\CarStoreShared.csproj", "{E297A64F-CE32-4DCE-99AD-6D0FFA750B66}"
@@ -40,18 +38,6 @@ Global
 		{651DCC3B-23A3-4509-BDFA-C6C252FA128B}.Release|x64.Build.0 = Release|Any CPU
 		{651DCC3B-23A3-4509-BDFA-C6C252FA128B}.Release|x86.ActiveCfg = Release|Any CPU
 		{651DCC3B-23A3-4509-BDFA-C6C252FA128B}.Release|x86.Build.0 = Release|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Debug|x64.Build.0 = Debug|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Debug|x86.Build.0 = Debug|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Release|x64.ActiveCfg = Release|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Release|x64.Build.0 = Release|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Release|x86.ActiveCfg = Release|Any CPU
-		{680CA8CF-2799-4DF9-BCCE-880241BF04A3}.Release|x86.Build.0 = Release|Any CPU
 		{BB118C60-4B24-4DAB-957C-80D5C7F56CEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB118C60-4B24-4DAB-957C-80D5C7F56CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB118C60-4B24-4DAB-957C-80D5C7F56CEF}.Debug|x64.ActiveCfg = Debug|Any CPU
