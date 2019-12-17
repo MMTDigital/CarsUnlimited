@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarStoreWeb", "CarStoreWeb\
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6EBDAD85-5772-4E45-B630-DD255D38361C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarStoreInventory", "CarStoreInventory\CarStoreInventory.csproj", "{90D64E94-5627-43E7-B810-1F7AAA453BEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A1ADAB83-C22A-4B67-BF32-C7E0B4D845BC}"
+	ProjectSection(SolutionItems) = preProject
+		azuredeploy.json = azuredeploy.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +93,17 @@ Global
 		{6EBDAD85-5772-4E45-B630-DD255D38361C}.Release|x64.Build.0 = Release|Any CPU
 		{6EBDAD85-5772-4E45-B630-DD255D38361C}.Release|x86.ActiveCfg = Release|Any CPU
 		{6EBDAD85-5772-4E45-B630-DD255D38361C}.Release|x86.Build.0 = Release|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Debug|x64.Build.0 = Debug|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Debug|x86.Build.0 = Debug|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Release|x64.ActiveCfg = Release|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Release|x64.Build.0 = Release|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Release|x86.ActiveCfg = Release|Any CPU
+		{90D64E94-5627-43E7-B810-1F7AAA453BEA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

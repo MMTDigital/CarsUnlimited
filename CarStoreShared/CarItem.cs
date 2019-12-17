@@ -3,7 +3,6 @@ namespace CarStoreShared
 {
     public class CarItem
     {
-        public string CarType;
         public string CarId;
         public string CarPicture;
         public string CarManufacturer;
@@ -12,9 +11,8 @@ namespace CarStoreShared
         public double CarPrice;
         public int CarsInStock;
 
-        public CarItem(string type, string id, string pictureUri, string manufacturer, string model, string info, double price, int stock)
+        public CarItem(string id, string pictureUri, string manufacturer, string model, string info, double price, int stock)
         {
-            CarType = type;
             CarId = id;
             CarPicture = pictureUri;
             CarManufacturer = manufacturer;
