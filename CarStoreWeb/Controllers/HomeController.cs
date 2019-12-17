@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CarStoreWeb.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace CarStoreWeb.Controllers
 {
@@ -20,6 +21,8 @@ namespace CarStoreWeb.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("SessionBirthTime", DateTime.Now.ToFileTime().ToString());
+            HttpContext.Session.GetString("SessionBirthTime");
             return View();
         }
 

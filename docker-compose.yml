@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  carstoreweb:
+    image: ${DOCKER_REGISTRY-}carstoreweb
+    build:
+      context: .
+      dockerfile: CarStoreWeb/Dockerfile
+
+  carstorepurchase:
+    image: ${DOCKER_REGISTRY-}carstorepurchase
+    build:
+      context: .
+      dockerfile: CarStorePurchase/Dockerfile
+
+
+  carstoreinventory:
+    image: ${DOCKER_REGISTRY-}carstoreinventory
+    build:
+      context: .
+      dockerfile: CarStoreInventory/Dockerfile
+
+
+  carstorecart:
+    image: ${DOCKER_REGISTRY-}carstorecart
+    build:
+      context: .
+      dockerfile: CarStoreCart/Dockerfile
+
