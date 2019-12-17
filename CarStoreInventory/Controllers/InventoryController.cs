@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarStoreInventory.Data;
 using CarStoreShared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -14,41 +15,67 @@ namespace CarStoreInventory.Controllers
     public class InventoryController : Controller
     {
         private readonly ApiOptions _apiOptions;
+        private InventoryBroker _broker;
 
         public InventoryController(IOptions<ApiOptions> apiOptions)
         {
-            _apiOptions = apiOptions;
-        }
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
+            _apiOptions = apiOptions.Value;
+            _broker = new InventoryBroker();
+            _broker.PullAsync(_apiOptions.StorageConnectionString).Wait();
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public Dictionary<string, CarItem> Post([FromBody]ApiPackage package)
         {
+            var sessionId = package.SessionIdentifier;
+            var apiKey = package.ApiKey;
+
+            if(apiKey == null)
+            {
+                return new Dictionary<string, CarItem>();
+            }
+
+            if(!apiKey.Equals(_apiOptions.MyApiKey))
+            {
+                return new Dictionary<string, CarItem>();
+            }
+
+            return _broker.GetCurrentInventory();
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPost("{id}")]
+        public CarItem PostItem(string id, [FromBody]ApiPackage package)
         {
+            var sessionId = package.SessionIdentifier;
+            var apiKey = package.ApiKey;
+
+            if(apiKey == null)
+            {
+                return null;
+            }
+
+            if(!apiKey.Equals(_apiOptions.MyApiKey))
+            {
+                return null;
+            }
+
+            if(string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
+
+            if (!id.Contains(":"))
+            {
+                return null;
+            }
+
+            return _broker.GetInventoryItemById(id);
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPut]
+        public string Put([FromBody]ApiPackage package)
         {
+            return _broker.ChangeStock(package.ContentItem, _apiOptions.StorageConnectionString);
         }
     }
 }
