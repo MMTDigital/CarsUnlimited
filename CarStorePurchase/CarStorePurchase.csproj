@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarStoreShared\CarStoreShared.csproj">
