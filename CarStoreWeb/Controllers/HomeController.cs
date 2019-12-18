@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CarStoreWeb.Models;
 using Microsoft.AspNetCore.Http;
+using CarStoreWeb.Data;
 
 namespace CarStoreWeb.Controllers
 {
@@ -23,11 +24,7 @@ namespace CarStoreWeb.Controllers
         {
             HttpContext.Session.SetString("SessionBirthTime", DateTime.Now.ToFileTime().ToString());
             HttpContext.Session.GetString("SessionBirthTime");
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
+            ViewData["CartItems"] = CartProxy.GetInstance().GetCurrentCartItems(HttpContext.Session.Id);
             return View();
         }
 

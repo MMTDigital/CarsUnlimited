@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarStoreWeb.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,8 +24,17 @@ namespace CarStoreWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSession();
+            services.AddSession(options =>
+                {
+                    options.IdleTimeout = TimeSpan.FromHours(6);
+                    options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.None;
+                    options.Cookie.Name = "CarsUnlimited.Session";
+
+                    options.Cookie.HttpOnly = true;
+                }
+            );
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +65,18 @@ namespace CarStoreWeb
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var cartApi = Configuration.GetSection("CartAPI").Value;
+            var inventoryApi = Configuration.GetSection("InventoryApi").Value;
+            var purchaseApi = Configuration.GetSection("PurchaseApi").Value;
+
+            var cartApiKey = Configuration.GetSection("CartApiKey").Value;
+            var inventoryApiKey = Configuration.GetSection("InventoryApiKey").Value;
+            var purchaseApiKey = Configuration.GetSection("PurchaseApiKey").Value;
+
+            new CartProxy(cartApi, cartApiKey);
+            new InventoryProxy(inventoryApi, inventoryApiKey);
+            new PurchaseProxy(purchaseApi, purchaseApiKey);
         }
     }
 }
