@@ -1,5 +1,51 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using CarStoreShared
+@model CarStoreWeb.Models.StoreViewModel
+
 @{
+    ViewData["Title"] = "Store";
 }
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.CarsToDisplay.Count > 0)
+{
+    <table>
+        @foreach (CarItem car in Model.CarsToDisplay)
+        {
+            <tr>
+                <td><img src="@car.CarPicture" alt="@car.CarManufacturer:@car.CarId" width="200" /></td>
+                <td width="200"><p> @string.Format("{0} {1}", car.CarManufacturer, car.CarId)</td>
+                <td><p> @Html.DisplayFor(item => car.CarInfo) </p></td>
+                <td width="150">
+                    <p>&#163; @String.Format("{0:N2}", car.CarPrice)</p>
+                    @if (car.CarsInStock > 0)
+                    {
+                        <p><b>In Stock</b></p>
+                        <p><a href="javascript:AddToCart('@car.CarManufacturer:@car.CarId')">Add to Cart</a></p>
+                    }
+                    else
+                    {
+                        <p><i>Out of stock</i></p>
+                    }
+
+
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>It looks like there are no cars in our online inventory. Please give us a call, and we'll be more than happy to help you.</p>
+}
+
+<script language="javascript" type="text/javascript">
+
+    function AddToCart(manufacturerAndIdString) {
+        $.ajax({
+            url: ("/Store/AddToCart?manufacturerAndIdString=" + manufacturerAndIdString + "&randomNumber=" + Math.floor((Math.random() * 10000) + 1))
+        })
+            .done(function (data) {
+                document.getElementById('cartItems').innerHTML = data;
+            });
+    }
+</script>

@@ -63,7 +63,7 @@ namespace CarStoreWeb.Data
             HttpClient client = new HttpClient();
 
             var content = JsonConvert.SerializeObject(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key, ContentItem = manufacturerAndIdString });
-            var externalTask = client.PostAsync($"{_endpoint}api/cart/{sessionIdentifier}", new StringContent(content, Encoding.UTF8, "application/json"));
+            var externalTask = client.PutAsync($"{_endpoint}api/cart/{sessionIdentifier}", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
             var returnedValueTask = externalTask.Result.Content.ReadAsStringAsync();

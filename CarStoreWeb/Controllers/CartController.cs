@@ -48,7 +48,7 @@ namespace CarStoreWeb.Controllers
 
             }
 
-            ViewData["Total"] = total.ToString("{0:N2}");
+            ViewData["Total"] = string.Format("{0:N2}", total);
 
 
             return View(cartModel);

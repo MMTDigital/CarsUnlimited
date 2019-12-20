@@ -1,0 +1,38 @@
+﻿@using CarStoreShared
+@model CarStoreWeb.Models.CartViewModel
+@{
+    ViewData["Title"] = "Your cart with " + ViewData["CartItems"] + " items";
+}
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.CartItemsToDisplay.Keys.Count > 0)
+{
+    <table>
+        @foreach (CarItem car in Model.CartItemsToDisplay.Keys)
+        {
+            <tr>
+                <td width="100">@Model.CartItemsToDisplay[car] x</td>
+                <td><img src="@car.CarPicture" alt="@car.CarManufacturer:@car.CarId" width="75" /></td>
+                <td width="300"><p> @string.Format("{0} {1}", car.CarManufacturer, car.CarId) </p></td>
+                <td><p style="font-size: 8pt;"> @Html.DisplayFor(item => car.CarInfo) </p></td>
+                <td width="150">
+                    <p><i>&#163; @String.Format("{0:N2}", car.CarPrice) </i>per item</p>
+                    <p><b>&#163; @String.Format("{0:N2}", (Model.CartItemsToDisplay[car] * car.CarPrice)) </b> in total</p>
+                    <p>@Html.ActionLink("Remove from cart", "Remove", "Cart", new { carManufacturerAndId = (car.CarManufacturer + ":" + car.CarId) })</p>
+
+                </td>
+            </tr>
+        }
+    </table>
+    <h3>Current Total: &#163; @ViewData["Total"]</h3>
+    @using (Html.BeginForm("Order", "Cart"))
+    {
+        <p>Enter your e-mail address to send us your order: <input type="text" name="EMail" /></p>
+        <p><input type="submit" value="Order now" /></p>
+        <p>Our automated system will confirm your order immediately.</p>
+    }
+}
+else
+{
+    <p>The Cart is currently empty. Please head to the <b>Store</b> to add items to the cart.</p>
+}

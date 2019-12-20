@@ -40,7 +40,6 @@ services:
       dockerfile: CarStoreInventory/Dockerfile
     environment: 
       - ASPNETCORE_ENVIRONMENT=Development
-      - StorageConnectionString=DefaultEndpointsProtocol=https;AccountName=lgcarsunltdstor;AccountKey=+qnZJ1ERRo3JfOpXQV7ZdKQ26xino0c12ngHCVLFf0zUlZsrMmQhcPIR+8PU4OkWID2/t2onRT0s04NkD2jb7A==;EndpointSuffix=core.windows.net
     ports:
       - 5003:80
       - 5053:443

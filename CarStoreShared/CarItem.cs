@@ -3,13 +3,13 @@ namespace CarStoreShared
 {
     public class CarItem
     {
-        public string CarId;
-        public string CarPicture;
-        public string CarManufacturer;
-        public string CarModel;
-        public string CarInfo;
-        public double CarPrice;
-        public int CarsInStock;
+        public string CarId { get; set; }
+        public string CarPicture { get; set; }
+        public string CarManufacturer { get; set; }
+        public string CarModel { get; set; }
+        public string CarInfo { get; set; }
+        public double CarPrice { get; set; }
+        public int CarsInStock { get; set; }
 
         public CarItem(string id, string pictureUri, string manufacturer, string model, string info, double price, int stock)
         {
