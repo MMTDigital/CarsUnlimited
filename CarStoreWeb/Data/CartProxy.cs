@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 using CarStoreShared;
 
 namespace CarStoreWeb.Data
@@ -30,7 +30,8 @@ namespace CarStoreWeb.Data
         {
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key });
+            var apiPackage = new ApiPackage() { SessionIdentifier = sessionIdentifier, ApiKey = _key };
+            var content = JsonConvert.SerializeObject(apiPackage);
             var externalTask = client.PostAsync($"{_endpoint}api/cart", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -45,7 +46,7 @@ namespace CarStoreWeb.Data
         public string[] GetCurrentCartItems(string sessionIdentifier)
         {
             HttpClient client = new HttpClient();
-            var content = JsonSerializer.Serialize(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key });
+            var content = JsonConvert.SerializeObject(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key });
             var externalTask = client.PostAsync($"{_endpoint}api/cart", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -61,7 +62,7 @@ namespace CarStoreWeb.Data
         {
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key, ContentItem = manufacturerAndIdString });
+            var content = JsonConvert.SerializeObject(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key, ContentItem = manufacturerAndIdString });
             var externalTask = client.PostAsync($"{_endpoint}api/cart/{sessionIdentifier}", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -77,7 +78,7 @@ namespace CarStoreWeb.Data
         {
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key, ContentItem = $"-{manufacturerAndIdString}" });
+            var content = JsonConvert.SerializeObject(new ApiPackage { SessionIdentifier = sessionIdentifier, ApiKey = _key, ContentItem = $"-{manufacturerAndIdString}" });
             var externalTask = client.PutAsync($"{_endpoint}api/cart/{sessionIdentifier}", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 

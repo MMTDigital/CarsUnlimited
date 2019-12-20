@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 using CarStoreShared;
 
 namespace CarStoreWeb.Data
@@ -30,7 +30,7 @@ namespace CarStoreWeb.Data
         {
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { SessionIdentifier = sessionIdentitfier, ApiKey = _key, ContentItem = email });
+            var content = JsonConvert.SerializeObject(new ApiPackage { SessionIdentifier = sessionIdentitfier, ApiKey = _key, ContentItem = email });
             var externalTask = client.PostAsync($"{_endpoint}api/purchase", new StringContent(content, Encoding.UTF8, "application/json"));
             var returnedValue = "Failed;A technical problem occured";
 

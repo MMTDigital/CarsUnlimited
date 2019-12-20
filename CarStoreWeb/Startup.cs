@@ -33,6 +33,7 @@ namespace CarStoreWeb
                     options.Cookie.HttpOnly = true;
                 }
             );
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
         }
@@ -74,9 +75,9 @@ namespace CarStoreWeb
             var inventoryApiKey = Configuration.GetSection("InventoryApiKey").Value;
             var purchaseApiKey = Configuration.GetSection("PurchaseApiKey").Value;
 
-            new CartProxy(cartApi, cartApiKey);
-            new InventoryProxy(inventoryApi, inventoryApiKey);
-            new PurchaseProxy(purchaseApi, purchaseApiKey);
+            _ = new CartProxy(cartApi, cartApiKey);
+            _ = new InventoryProxy(inventoryApi, inventoryApiKey);
+            _ = new PurchaseProxy(purchaseApi, purchaseApiKey);
         }
     }
 }

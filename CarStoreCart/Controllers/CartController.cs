@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 namespace CarStoreCart.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class CartController : Controller
     {
         private readonly ApiOptions _apiOptions;
@@ -29,12 +30,12 @@ namespace CarStoreCart.Controllers
             var sessionId = package.SessionIdentifier;
             var apiKey = package.ApiKey;
 
-            if(sessionId == null || apiKey == null)
+            if (sessionId == null || apiKey == null)
             {
                 throw new InvalidOperationException("API package invalid");
             }
 
-            if(!apiKey.Equals(_apiOptions.MyApiKey))
+            if (!apiKey.Equals(_apiOptions.MyApiKey))
             {
                 throw new InvalidOperationException("API Key not valid");
             }

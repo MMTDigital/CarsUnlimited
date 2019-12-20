@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 using CarStoreShared;
 
 namespace CarStoreWeb.Data
@@ -31,7 +31,12 @@ namespace CarStoreWeb.Data
         {
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { ApiKey = _key });
+            var apiPackage = new ApiPackage()
+            {
+                ApiKey = _key
+            };
+
+            var content = JsonConvert.SerializeObject(apiPackage);
             var externalTask = client.PostAsync($"{_endpoint}api/inventory", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -40,14 +45,14 @@ namespace CarStoreWeb.Data
 
             var returnedValue = returnedValueTask.Result;
 
-            return JsonSerializer.Deserialize<Dictionary<string, CarItem>>(returnedValue);
+            return JsonConvert.DeserializeObject<Dictionary<string, CarItem>>(returnedValue);
         }
 
         internal CarItem GetInventoryItem(string key)
         {
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { ApiKey = _key });
+            var content = JsonConvert.SerializeObject(new ApiPackage { ApiKey = _key });
             var externalTask = client.PostAsync($"{_endpoint}api/inventory/{key}", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -56,7 +61,7 @@ namespace CarStoreWeb.Data
 
             var returnedValue = returnedValueTask.Result;
 
-            return JsonSerializer.Deserialize<CarItem>(returnedValue);
+            return JsonConvert.DeserializeObject<CarItem>(returnedValue);
         }
     }
 }
