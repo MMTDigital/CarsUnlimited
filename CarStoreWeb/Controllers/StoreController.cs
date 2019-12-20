@@ -15,7 +15,7 @@ namespace CarStoreWeb.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            ViewData["CartItems"] = CartProxy.GetInstance().GetCurrentCartItems(HttpContext.Session.Id);
+            ViewData["CartItems"] = CartProxy.GetInstance().GetCurrentNumberOfItems(HttpContext.Session.Id);
             var inventory = InventoryProxy.GetInstance().GetInventory();
 
             var storeModel = new StoreViewModel();

@@ -24,7 +24,7 @@ namespace CarStoreWeb.Controllers
         {
             HttpContext.Session.SetString("SessionBirthTime", DateTime.Now.ToFileTime().ToString());
             HttpContext.Session.GetString("SessionBirthTime");
-            ViewData["CartItems"] = CartProxy.GetInstance().GetCurrentCartItems(HttpContext.Session.Id);
+            ViewData["CartItems"] = CartProxy.GetInstance().GetCurrentNumberOfItems(HttpContext.Session.Id);
             return View();
         }
 
