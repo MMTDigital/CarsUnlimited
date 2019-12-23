@@ -11,10 +11,10 @@ services:
       - PurchaseApi=http://carstorepurchase/
       - InventoryApi=http://carstoreinventory/
       - CartApi=http://carstorecart/
+
     ports:
       - 5001:80
       - 5051:443
-    command: printenv
     depends_on: 
       - carstorepurchase
       - carstorecart
@@ -27,8 +27,8 @@ services:
       dockerfile: CarStorePurchase/Dockerfile
     environment: 
       - ASPNETCORE_ENVIRONMENT=Development
-      - InventoryApi="http://carstoreinventory/"
-      - CartApi="http://carstorecart/"
+      - InventoryApi=http://carstoreinventory/
+      - CartApi=http://carstorecart/
     ports:
       - 5002:80
       - 5052:443

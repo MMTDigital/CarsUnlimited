@@ -111,7 +111,7 @@ namespace CarStoreWeb.Controllers
                 total = total + (car.CarPrice * preDict[key]);
             }
 
-            ViewData["Total"] = total.ToString("{0:N2}");
+            ViewData["Total"] = string.Format("{0:N2}", total);
 
             if((bool)ViewData["OrderBool"] == false)
             {

@@ -30,7 +30,7 @@ else
                 <td width="300"><p> @string.Format("{0} {1}", car.CarManufacturer, car.CarId) </p></td>
                 <td><p style="font-size: 8pt;"> @Html.DisplayFor(item => car.CarInfo) </p></td>
                 <td width="150">
-                    <p><i>&#163; @String.Format("{0:N2}", car.) </i>per item</p>
+                    <p><i>&#163; @String.Format("{0:N2}", car.CarPrice) </i>per item</p>
                     <p><b>&#163; @String.Format("{0:N2}", (Model.CartItemsToDisplay[car] * car.CarPrice)) </b> in total</p>
 
                 </td>

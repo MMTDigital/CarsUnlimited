@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using CarStoreShared;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Newtonsoft.Json;
 
 namespace CarStorePurchase.Data
 {
@@ -29,7 +29,7 @@ namespace CarStorePurchase.Data
 
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { SessionIdentifier = sessionId, ApiKey = cartKey });
+            var content = JsonConvert.SerializeObject(new ApiPackage { SessionIdentifier = sessionId, ApiKey = cartKey });
             var externalTask = client.PostAsync($"{cartEndpoint}api/cart", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -83,7 +83,7 @@ namespace CarStorePurchase.Data
                 instructionString += $"{key.CarManufacturer}:{key.CarId}:-{carDict[key]};";
             }
 
-            content = JsonSerializer.Serialize(new ApiPackage { ApiKey = inventoryKey, SessionIdentifier = sessionId, ContentItem = instructionString });
+            content = JsonConvert.SerializeObject(new ApiPackage { ApiKey = inventoryKey, SessionIdentifier = sessionId, ContentItem = instructionString });
             externalTask = client.PutAsync($"{inventoryEndpoint}api/inventory", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -106,12 +106,12 @@ namespace CarStorePurchase.Data
 
             foreach(var car in carDict)
             {
-                formattedMessage += $"<p>{car.Value}x <b>{car.Key.CarManufacturer} {car.Key.CarModel}</b> at <i>&#163; {car.Key.CarPrice.ToString("{0:N2}")} each, totalling <b>&#163; {(car.Key.CarPrice * car.Value).ToString("{0:N2}")}</b></p>";
-                unformattedMessage += $"{car.Value}x {car.Key.CarManufacturer} {car.Key.CarModel} at GBP {car.Key.CarPrice.ToString("{0:N2}")} each, totalling GBP {(car.Key.CarPrice * car.Value).ToString("{0:N2}")} \r\n";
+                formattedMessage += $"<p>{car.Value}x <b>{car.Key.CarManufacturer} {car.Key.CarModel}</b> at <i>&#163; {string.Format("{0:N2}", car.Key.CarPrice)} each, totalling <b>&#163; {string.Format("{0:N2}", (car.Key.CarPrice * car.Value))}</b></p>";
+                unformattedMessage += $"{car.Value}x {car.Key.CarManufacturer} {car.Key.CarModel} at GBP {string.Format("{0:N2}", car.Key.CarPrice)} each, totalling GBP {string.Format("{0:N2}", (car.Key.CarPrice * car.Value))} \r\n";
             }
 
-            formattedMessage += $"<h3>Total: &#163; {total.ToString("{0:N2}")}</h3>";
-            unformattedMessage += $"\r\n \r\n Total: GBP {total.ToString("{0:N2}")}";
+            formattedMessage += $"<h3>Total: &#163; {string.Format("{0:N2}", total)}</h3>";
+            unformattedMessage += $"\r\n \r\n Total: GBP {string.Format("{0:N2}", total)}";
 
             var msg = new SendGridMessage()
             {
@@ -139,7 +139,7 @@ namespace CarStorePurchase.Data
         {
             HttpClient client = new HttpClient();
 
-            var content = JsonSerializer.Serialize(new ApiPackage { ApiKey = inventoryKey });
+            var content = JsonConvert.SerializeObject(new ApiPackage { ApiKey = inventoryKey });
             var externalTask = client.PostAsync($"{inventoryApi}api/inventory/{key}", new StringContent(content, Encoding.UTF8, "application/json"));
             externalTask.Wait();
 
@@ -149,7 +149,7 @@ namespace CarStorePurchase.Data
 
             var returnedValue = returnedValueTask.Result;
 
-            return JsonSerializer.Deserialize<CarItem>(returnedValue);
+            return JsonConvert.DeserializeObject<CarItem>(returnedValue);
         }
     }
 }
