@@ -15,7 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarStoreInventory", "CarSto
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A1ADAB83-C22A-4B67-BF32-C7E0B4D845BC}"
 	ProjectSection(SolutionItems) = preProject
-		azuredeploy.json = azuredeploy.json
+		Infrastructure\containerregistry.deploy.json = Infrastructure\containerregistry.deploy.json
+		Infrastructure\storageaccount.deploy.json = Infrastructure\storageaccount.deploy.json
 	EndProjectSection
 EndProject
 Global
